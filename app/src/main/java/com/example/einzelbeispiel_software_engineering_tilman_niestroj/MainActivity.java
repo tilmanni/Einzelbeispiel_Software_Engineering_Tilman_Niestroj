@@ -18,8 +18,8 @@ import java.net.Socket;
 public class MainActivity extends AppCompatActivity {
     Thread Thread1 = null;
     EditText editTextMatriculationNumber;
-    TextView serverAnswer, enterText, actualServerAnswer;
-    Button sendButton;
+    TextView serverAnswer, enterText, actualServerAnswer, calculateAnswer, actualCalculateAnswer;
+    Button sendButton, calculateButton;
     String matriculationNumber;
     DataOutputStream outToServer;
     BufferedReader inFromServer;
@@ -34,12 +34,34 @@ public class MainActivity extends AppCompatActivity {
         serverAnswer = findViewById(R.id.serverAnswer);
         enterText = findViewById(R.id.enterText);
         actualServerAnswer = findViewById(R.id.actualSeverAnswer);
+        calculateAnswer = findViewById(R.id.calculateAnswer);
+        actualCalculateAnswer = findViewById(R.id.actualCalculateAnswer);
         sendButton = findViewById(R.id.sendButton);
+        calculateButton = findViewById(R.id.calculateButton);
         sendButton.setOnClickListener(v -> {
             matriculationNumber = editTextMatriculationNumber.getText().toString().trim();
             Thread1 = new Thread(new Thread1());
             Thread1.start();
         });
+
+        calculateButton.setOnClickListener(v -> {
+            matriculationNumber = editTextMatriculationNumber.getText().toString().trim();
+            runOnUiThread(() -> actualCalculateAnswer.setText(calculation(matriculationNumber)));
+        });
+    }
+
+    private static String calculation(String input) {
+        StringBuilder output = new StringBuilder();
+        char c;
+        for (int i = 0; i < input.length(); i++) {
+            if (i % 2 == 1) {
+                c =  (char) (96 + Short.parseShort(input.charAt(i) + ""));
+            } else {
+                c = input.charAt(i);
+            }
+            output.append(c);
+        }
+        return output.toString();
     }
 
     class Thread1 implements Runnable {
