@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         char c;
         for (int i = 0; i < input.length(); i++) {
             if (i % 2 == 1) {
-                c =  (char) (96 + Short.parseShort(input.charAt(i) + ""));
+                c =  (char) (95 + Short.parseShort(input.charAt(i) + ""));
             } else {
                 c = input.charAt(i);
             }
